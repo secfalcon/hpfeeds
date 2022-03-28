@@ -28,6 +28,7 @@ CHANNELS = [
     'elastichoney.events',
     'drupot.events',
     'agave.events',
+    'uhp.events',
 ]
 GEOLOC_CHAN = 'geoloc.events'
 IDENT = ''
@@ -64,6 +65,7 @@ PROCESSORS = {
     'elastichoney.events': [elastichoney_events,],
     'drupot.events': [drupot_events,],
     'agave.events': [agave_events,],
+    'uhp.events': [uhp_events,],
 }
 
 def main():

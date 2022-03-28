@@ -252,3 +252,12 @@ def elastichoney_events(identifier, payload, gi):
         traceback.print_exc()
         return None
     return create_message('elastichoney.events', identifier, gi, src_ip=dec.source, dst_ip=dec.honeypot)
+
+def uhp_events(identifier, payload, gi):
+    try:
+        dec = ezdict(json.loads(str(payload)))
+    except:
+        print 'exception processing uhp event'
+        traceback.print_exc()
+        return None
+    return create_message('uhp.events', identifier, gi, src_ip=dec.src_ip, dst_ip=dec.dest_ip)
