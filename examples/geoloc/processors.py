@@ -160,28 +160,35 @@ def agave_events(identifier, payload, gi):
 # TODO: use this function everywhere else is can be to clean up this code.
 def create_message(event_type, identifier, gi, src_ip, dst_ip):
     geo = gi.city(src_ip)
-    geo2 = gi.city(dst_ip)
+    try:
+        geo2 = gi.city(dst_ip)
+    except:
+        geo2 = None
 
     message = {
-        'type':   event_type, 
-        'sensor': identifier, 
+        'type':   event_type,
+        'sensor': identifier,
         'time':   timestr(datetime.datetime.now()),
         'source': src_ip,
 
         'latitude':    geo.location.latitude,
-        'longitude':   geo.location.longitude, 
-        'city':        geo.city.name, 
-        'country':     geo.country.name, 
+        'longitude':   geo.location.longitude,
+        'city':        geo.city.name,
+        'country':     geo.country.name,
         'countrycode': geo.country.iso_code,
-
-        'latitude2':    geo2.location.latitude,
-        'longitude2':   geo2.location.longitude, 
-        'city2':        geo2.city.name, 
-        'country2':     geo2.country.name, 
-        'countrycode2': geo2.country.iso_code
     }
 
+    if geo2 != None:
+        message.update({
+            'latitude2':    geo2.location.latitude,
+            'longitude2':   geo2.location.longitude,
+            'city2':        geo2.city.name,
+            'country2':     geo2.country.name,
+            'countrycode2': geo2.country.iso_code
+        })
+
     return message
+
 
 def shockpot_event(identifier, payload, gi):
     try:
